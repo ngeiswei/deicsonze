@@ -1,7 +1,6 @@
 # Deicsonze
 
-Emulator of the YM2414, the FM synthesis is the Yamaha TX81Z, DX11 and
-other synthesizers.
+Emulator of the YM2414, the FM synthesizer of the Yamaha DX11 and TX81Z.
 
 ## Features
 
