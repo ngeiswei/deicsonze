@@ -1,6 +1,8 @@
 # Deicsonze
 
-Emulator of the YM2414, the FM synthesizer of the Yamaha DX11 and TX81Z.
+Emulator of the YM2414, the FM synthesizer of the Yamaha DX11 and
+TX81Z. Previously only part of http://www.muse-sequencer.org/ now
+standalone.
 
 ## Features
 
