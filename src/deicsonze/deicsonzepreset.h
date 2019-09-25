@@ -32,8 +32,6 @@
 
 #include <vector>
 #include <string>
-#include "al/xml.h"
-#include "muse/midictrl_consts.h"
 
 #define NBROP 4 //do not change
 #define MAXCHARTAG 256
@@ -283,7 +281,7 @@
 #define MINCHANNELENABLE 0
 #define CTRL_CHANNELENABLE 128+CTRLOFFSET
 
-class Preset;
+	class Preset;
 class Subcategory;
 class Category;
 class Set;
@@ -293,36 +291,36 @@ class Set;
 //---------------------------------------------------------
 
 enum Algorithm {
-  FIRST, // Op 0 modulated by Op 1 modulated by Op 2 modulated by Op3
-  SECOND, // Op 0 modulated by Op 1 modulated by both Op 2 and Op 3
-  THIRD, // Op 0 modulated by both Op 3 and Op 1 modulated by Op 2
-  FOURTH, // Op 0 modulated by both Op 1 and Op 2 modulated by Op 3
-  FIFTH, // (Op 0 modulated by Op 1) add to (Op 2 modulated by Op 3)
-  SIXTH, // addition of the three Op 0, 1, 2 all modulated by Op 3
-  SEVENTH, // addition of the three Op 0, 1, 2 with 2 modulated by Op3
-  EIGHTH // addition of the four Op 0, 1, 2, 3
+	FIRST, // Op 0 modulated by Op 1 modulated by Op 2 modulated by Op3
+	SECOND, // Op 0 modulated by Op 1 modulated by both Op 2 and Op 3
+	THIRD, // Op 0 modulated by both Op 3 and Op 1 modulated by Op 2
+	FOURTH, // Op 0 modulated by both Op 1 and Op 2 modulated by Op 3
+	FIFTH, // (Op 0 modulated by Op 1) add to (Op 2 modulated by Op 3)
+	SIXTH, // addition of the three Op 0, 1, 2 all modulated by Op 3
+	SEVENTH, // addition of the three Op 0, 1, 2 with 2 modulated by Op3
+	EIGHTH // addition of the four Op 0, 1, 2, 3
 };
 
 //---------------------------------------------------------
 // Wave of the low frequency modulation
 //---------------------------------------------------------
 enum Wave {
-  SAWUP,
-  SQUARE,
-  TRIANGL,
-  SHOLD
+	SAWUP,
+	SQUARE,
+	TRIANGL,
+	SHOLD
 };
 
 //---------------------------------------------------------
 // Lfo, low frequency modulation
 //---------------------------------------------------------
 struct Lfo {
-  Wave wave;
-  unsigned char speed; //0 to 99
-  unsigned char delay; //0 to 99
-  unsigned char pModDepth; //0 to 99
-  unsigned char aModDepth; //0 to 99
-  bool sync;
+	Wave wave;
+	unsigned char speed; //0 to 99
+	unsigned char delay; //0 to 99
+	unsigned char pModDepth; //0 to 99
+	unsigned char aModDepth; //0 to 99
+	bool sync;
 };
 
 //---------------------------------------------------------
@@ -331,34 +329,34 @@ struct Lfo {
 //  and the key velocity
 //---------------------------------------------------------
 struct Sensitivity {
-  unsigned char pitch; //0 to 7
-  unsigned char amplitude; //0 to 3
-  bool ampOn[NBROP];
-  unsigned char egBias[NBROP]; //O to 7
-  unsigned char keyVelocity[NBROP]; //0 to 7
+	unsigned char pitch; //0 to 7
+	unsigned char amplitude; //0 to 3
+	bool ampOn[NBROP];
+	unsigned char egBias[NBROP]; //O to 7
+	unsigned char keyVelocity[NBROP]; //0 to 7
 };
 
 //---------------------------------------------------------
 // Frequency
 //---------------------------------------------------------
 struct Frequency {
-  double ratio;
-  bool isFix; //if isFix no ratio but frequency
-  double freq;
+	double ratio;
+	bool isFix; //if isFix no ratio but frequency
+	double freq;
 };
 
 //---------------------------------------------------------
 // OscWave
 //---------------------------------------------------------
 enum OscWave {
-  W1, //sine wave
-  W2, //sine� relative
-  W3, //half sine
-  W4, //half sine� relative
-  W5,
-  W6,
-  W7,
-  W8
+	W1, //sine wave
+	W2, //sine� relative
+	W3, //half sine
+	W4, //half sine� relative
+	W5,
+	W6,
+	W7,
+	W8
 };
 
 enum egShiftValue {VOF, V48, V24, V12};
@@ -368,81 +366,81 @@ enum egShiftValue {VOF, V48, V24, V12};
 //  Envelope
 //---------------------------------------------------------
 struct Eg {
-  unsigned char ar; //0 to 31 speed attack
-  unsigned char d1r; //0 to 31 speed decay
-  unsigned char d1l; //0 to 15 level sustain
-  unsigned char d2r; //0 to 31 speed of sustain
-  unsigned char rr; //1 to 15
-  egShiftValue egShift;
+	unsigned char ar; //0 to 31 speed attack
+	unsigned char d1r; //0 to 31 speed decay
+	unsigned char d1l; //0 to 15 level sustain
+	unsigned char d2r; //0 to 31 speed of sustain
+	unsigned char rr; //1 to 15
+	egShiftValue egShift;
 };
 
 //---------------------------------------------------------
 // PitchEg
 //---------------------------------------------------------
 struct PitchEg {
-  unsigned char pr1;//0 to 99
-  unsigned char pr2;//0 to 99
-  unsigned char pr3;//0 to 99
-  unsigned char pl1;//0 to 99
-  unsigned char pl2;//0 to 99
-  unsigned char pl3;//0 to 99
+	unsigned char pr1;//0 to 99
+	unsigned char pr2;//0 to 99
+	unsigned char pr3;//0 to 99
+	unsigned char pl1;//0 to 99
+	unsigned char pl2;//0 to 99
+	unsigned char pl3;//0 to 99
 };
 
 //---------------------------------------------------------
 // Scaling
 //---------------------------------------------------------
 struct Scaling {
-  unsigned char rate[NBROP];//0 to 3
-  unsigned char level[NBROP];//0 to 99
+	unsigned char rate[NBROP];//0 to 3
+	unsigned char level[NBROP];//0 to 99
 };
 
 //---------------------------------------------------------
 // Mode
 //---------------------------------------------------------
 enum Mode {
-  POLY,
-  MONO
+	POLY,
+	MONO
 };
 
 //---------------------------------------------------------
 // Portamento
 //---------------------------------------------------------
 enum Portamento {
-  FINGER,
-  FULL
+	FINGER,
+	FULL
 };
 
 //---------------------------------------------------------
 // FootSw
 //---------------------------------------------------------
 enum FootSw {
-  POR,
-  SUS
+	POR,
+	SUS
 };
 //---------------------------------------------------------
 // Function
 //---------------------------------------------------------
 struct Function {
-  int transpose;
-  Mode mode;
-  unsigned char pBendRange;//0 to 12
-  Portamento portamento;
-  unsigned char portamentoTime;//0 to 99
-  FootSw footSw;
-  unsigned char fcVolume;//0 to 99
-  unsigned char fcPitch;//0 to 99
-  unsigned char fcAmplitude;//0 to 99
-  unsigned char mwPitch;//0 to 99
-  unsigned char mwAmplitude;//0 to 99
-  unsigned char bcPitch;//0 to 99
-  unsigned char bcAmplitude;//0 to 99
-  signed char bcPitchBias;//-50 to 50
-  unsigned char bcEgBias;//0 to 99
-  unsigned char atPitch;//0 to 99
-  unsigned char atAmplitude;//0 to 99
-  signed char atPitchBias;//-50 to 50
-  unsigned char atEgBias;//0 to 99
-  signed char reverbRate;//O=off, 1 to 7
+	int transpose;
+	Mode mode;
+	unsigned char pBendRange;//0 to 12
+	Portamento portamento;
+	unsigned char portamentoTime;//0 to 99
+	FootSw footSw;
+	unsigned char fcVolume;//0 to 99
+	unsigned char fcPitch;//0 to 99
+	unsigned char fcAmplitude;//0 to 99
+	unsigned char mwPitch;//0 to 99
+	unsigned char mwAmplitude;//0 to 99
+	unsigned char bcPitch;//0 to 99
+	unsigned char bcAmplitude;//0 to 99
+	signed char bcPitchBias;//-50 to 50
+	unsigned char bcEgBias;//0 to 99
+	unsigned char atPitch;//0 to 99
+	unsigned char atAmplitude;//0 to 99
+	signed char atPitchBias;//-50 to 50
+	unsigned char atEgBias;//0 to 99
+	signed char reverbRate;//O=off, 1 to 7
 };
 
 //---------------------------------------------------------
@@ -450,117 +448,109 @@ struct Function {
 //---------------------------------------------------------
 
 class Preset {
- public:
-    Subcategory* _subcategory; //subcategory parent
-    bool _isUsed; //false if the preset has never been used or modified,
-                  //in this case the preset is not going to be
-                  //save with the project
-    //Attributes
-    Algorithm algorithm;
-    unsigned char feedback; //0 to 7
-    Lfo lfo;
-    Sensitivity sensitivity;
-    Frequency frequency[NBROP];
-    OscWave oscWave[NBROP];
-    signed char detune[NBROP]; //-3 to 3
-    Eg eg[NBROP];
-    PitchEg pitchEg;
-    unsigned char outLevel[NBROP]; //0 to 99
-    Scaling scaling;
-    Function function;
-    //int globalDetune; //-31 to 31 //now to the channel
-    std::string name;
-    //unsigned char modulation; //0 to 127
-    int prog; //0 to 127
-    //Methods
-    void printPreset();
-    void initPreset();
-    void readPreset(QDomNode qdn);
-    void writePreset(AL::Xml* xml, bool onlyUsed);
-    void linkSubcategory(Subcategory* sub);
-    void merge(Preset* p); //copy the data of p in the preset
-    void setIsUsed(bool b); //set flag _isUsed and transmit in the parents
-    void getHBankLBankProg(int* h, int* l, int* p); //return the hbank, lbank and prog of the preset
-    //Constructor destructor
-    Preset();
-    Preset(Subcategory* sub);
-    Preset(Subcategory* sub, int prog);
-    ~Preset();
+public:
+	Subcategory* _subcategory; //subcategory parent
+	bool _isUsed; //false if the preset has never been used or modified,
+	//in this case the preset is not going to be
+	//save with the project
+	//Attributes
+	Algorithm algorithm;
+	unsigned char feedback; //0 to 7
+	Lfo lfo;
+	Sensitivity sensitivity;
+	Frequency frequency[NBROP];
+	OscWave oscWave[NBROP];
+	signed char detune[NBROP]; //-3 to 3
+	Eg eg[NBROP];
+	PitchEg pitchEg;
+	unsigned char outLevel[NBROP]; //0 to 99
+	Scaling scaling;
+	Function function;
+	//int globalDetune; //-31 to 31 //now to the channel
+	std::string name;
+	//unsigned char modulation; //0 to 127
+	int prog; //0 to 127
+	//Methods
+	void printPreset();
+	void initPreset();
+	void linkSubcategory(Subcategory* sub);
+	void merge(Preset* p); //copy the data of p in the preset
+	void setIsUsed(bool b); //set flag _isUsed and transmit in the parents
+	void getHBankLBankProg(int* h, int* l, int* p); //return the hbank, lbank and prog of the preset
+	//Constructor destructor
+	Preset();
+	Preset(Subcategory* sub);
+	Preset(Subcategory* sub, int prog);
+	~Preset();
 };
 
 //---------------------------------------------------------------
 // Bank, organized by a tree of category, subcategory, preset
 //---------------------------------------------------------------
 class Subcategory {
- public:
-    Category* _category;//parent category
-    bool _isUsed; //false if the subcategory has never been used or modified,
-                  //in this case the subcategory is not going to be
-                  //save with the project
-    std::string _subcategoryName;
-    int _lbank; //0 to 127
-    std::vector<Preset*> _presetVector;
-    Preset* findPreset(int prog);
-    void readSubcategory(QDomNode subNode);
-    void writeSubcategory(AL::Xml* xml, bool onlyUsed);
-    void printSubcategory();
-    void linkCategory(Category* cat);
-    void unlink();
-    bool isFreeProg(int prog);
-    int firstFreeProg();
-    void merge(Preset*);
-    //Constructor destructor
-    Subcategory();
-    Subcategory(Category* cat);
-    Subcategory(const std::string name);
-    Subcategory(Category* cat, const std::string name, int lbank);
-    ~Subcategory();
+public:
+	Category* _category;//parent category
+	bool _isUsed; //false if the subcategory has never been used or modified,
+	//in this case the subcategory is not going to be
+	//save with the project
+	std::string _subcategoryName;
+	int _lbank; //0 to 127
+	std::vector<Preset*> _presetVector;
+	Preset* findPreset(int prog);
+	void printSubcategory();
+	void linkCategory(Category* cat);
+	void unlink();
+	bool isFreeProg(int prog);
+	int firstFreeProg();
+	void merge(Preset*);
+	//Constructor destructor
+	Subcategory();
+	Subcategory(Category* cat);
+	Subcategory(const std::string name);
+	Subcategory(Category* cat, const std::string name, int lbank);
+	~Subcategory();
 };
 
 class Category {
- public:
-    Set* _set;//parent set
-    bool _isUsed; //false if the category has never been used or modified,
-                  //in this case the category is not going to be
-                  //save with the project
-    std::string _categoryName;
-    int _hbank; //0 to 127
-    std::vector<Subcategory*> _subcategoryVector;
-    Subcategory* findSubcategory(int lbank);
-    Preset* findPreset(int lbank, int prog);
-    void readCategory(QDomNode catNode);
-    void writeCategory(AL::Xml* xml, bool onlyUsed);
-    void printCategory();
-    void linkSet(Set* s);
-    void unlink();
-    bool isFreeLBank(int lbank);
-    int firstFreeLBank(); //return -1 if no free
-    void merge(Subcategory*);
-    //Constructor Destructor
-    Category();
-    Category(Set* s);
-    Category(Set* s,const std::string name, int hbank);
-    ~Category();
+public:
+	Set* _set;//parent set
+	bool _isUsed; //false if the category has never been used or modified,
+	//in this case the category is not going to be
+	//save with the project
+	std::string _categoryName;
+	int _hbank; //0 to 127
+	std::vector<Subcategory*> _subcategoryVector;
+	Subcategory* findSubcategory(int lbank);
+	Preset* findPreset(int lbank, int prog);
+	void printCategory();
+	void linkSet(Set* s);
+	void unlink();
+	bool isFreeLBank(int lbank);
+	int firstFreeLBank(); //return -1 if no free
+	void merge(Subcategory*);
+	//Constructor Destructor
+	Category();
+	Category(Set* s);
+	Category(Set* s,const std::string name, int hbank);
+	~Category();
 };
 
 class Set {
- public:
-    std::string _setName;
-    std::vector<Category*> _categoryVector;
-    Preset* findPreset(int hbank, int lbank, int prog);
-    Subcategory* findSubcategory(int hbank, int lbank);
-    Category* findCategory(int hbank);
-    void readSet(QDomNode setNode);
-    void writeSet(AL::Xml* xml, bool onlyUsed);
-    void printSet();
-    bool isFreeHBank(int hbank);
-    int firstFreeHBank();
-    void merge(Category*);
-    //Constructor Destructor
-    Set(const std::string name){_setName=name;}
-    ~Set() {
-	while(!_categoryVector.empty()) delete(*_categoryVector.begin());
-    }
+public:
+	std::string _setName;
+	std::vector<Category*> _categoryVector;
+	Preset* findPreset(int hbank, int lbank, int prog);
+	Subcategory* findSubcategory(int hbank, int lbank);
+	Category* findCategory(int hbank);
+	void printSet();
+	bool isFreeHBank(int hbank);
+	int firstFreeHBank();
+	void merge(Category*);
+	//Constructor Destructor
+	Set(const std::string name){_setName=name;}
+	~Set() {
+		while(!_categoryVector.empty()) delete(*_categoryVector.begin());
+	}
 };
 
 #endif /* __DEICSONZE_H */

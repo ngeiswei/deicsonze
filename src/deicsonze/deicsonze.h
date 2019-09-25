@@ -1,6 +1,6 @@
 //===========================================================================
 //
-//    DeicsOnze an emulator of the YAMAHA DX11 synthesizer
+//    Deicsonze an emulator of the YAMAHA DX11 synthesizer
 //
 //    Version 0.5.5
 //
@@ -32,14 +32,12 @@
 #define __DEICSONZE_H
 
 #include <list>
+#include <string>
 
 #include "common_defs.h"
 #include "deicsonzepreset.h"
-#include "deicsonzegui.h"
 #include "deicsonzeplugin.h"
 #include "deicsonzefilter.h"
-#include "libsynti/mess.h"
-#include "libsimpleplugin/simpler_plugin.h"
 
 #define DEICSONZESTR "deicsonze"
 
@@ -104,7 +102,7 @@
 ///#define SAVEINITLENGTH 2
 #define SAVEINITLENGTH 4    // MFG ID, synth ID, init data command, init data version
 
-#define DEICSONZECONFIGURATIONSTR "deicsOnzeConfiguation"
+#define DEICSONZECONFIGURATIONSTR "deicsonzeConfiguation"
 #define SYSEX_MASTERVOL 4
 #define MASTERVOLSTR "MasterVolume"
 #define MAXMASTERVOLUME 255
@@ -168,67 +166,64 @@
 #define DEFAULTVOL 200
 
 enum {
-  NUM_MASTERVOL = SAVEINITLENGTH,
-  NUM_CHANNEL_ENABLE,
-  NUM_CHANNEL_VOL = NUM_CHANNEL_ENABLE + NBRCHANNELS + 1,
-  NUM_CHANNEL_PAN = NUM_CHANNEL_VOL + NBRCHANNELS + 1,
-  NUM_CHANNEL_BRIGHTNESS = NUM_CHANNEL_PAN + NBRCHANNELS + 1,
-  NUM_CHANNEL_MODULATION = NUM_CHANNEL_BRIGHTNESS + 2*NBRCHANNELS +1,
-  NUM_CHANNEL_DETUNE = NUM_CHANNEL_MODULATION + NBRCHANNELS + 1,
-  NUM_CHANNEL_ATTACK = NUM_CHANNEL_DETUNE + NBRCHANNELS + 1,
-  NUM_CHANNEL_RELEASE = NUM_CHANNEL_ATTACK + NBRCHANNELS + 1,
-  NUM_CHANNEL_REVERB = NUM_CHANNEL_RELEASE + NBRCHANNELS + 1,
-  NUM_CHANNEL_CHORUS = NUM_CHANNEL_REVERB + NBRCHANNELS + 1,  
-  NUM_CHANNEL_DELAY = NUM_CHANNEL_CHORUS + NBRCHANNELS + 1,
-  NUM_CURRENTPROG = NUM_CHANNEL_DELAY + NBRCHANNELS + 1,
-  NUM_CURRENTLBANK = NUM_CURRENTPROG + NBRCHANNELS + 1,
-  NUM_CURRENTHBANK = NUM_CURRENTLBANK + NBRCHANNELS + 1,
-  NUM_NBRVOICES  = NUM_CURRENTHBANK + NBRCHANNELS + 1,
-  NUM_SAVEONLYUSED  = NUM_NBRVOICES + NBRCHANNELS + 1,
-  NUM_SAVECONFIG,
-  NUM_RED_TEXT,
-  NUM_GREEN_TEXT,
-  NUM_BLUE_TEXT,
-  NUM_RED_BACKGROUND,
-  NUM_GREEN_BACKGROUND,
-  NUM_BLUE_BACKGROUND,
-  NUM_RED_EDITTEXT,
-  NUM_GREEN_EDITTEXT,
-  NUM_BLUE_EDITTEXT,
-  NUM_RED_EDITBACKGROUND,
-  NUM_GREEN_EDITBACKGROUND,
-  NUM_BLUE_EDITBACKGROUND,
-  NUM_QUALITY,
-  NUM_FILTER,
-  NUM_FONTSIZE,
-  NUM_ISINITSET,
-  NUM_INITSETPATH,
-  NUM_ISBACKGROUNDPIX = NUM_INITSETPATH + MAXSTRLENGTHINITSETPATH + 1,
-  NUM_BACKGROUNDPIXPATH,
-  NUM_IS_REVERB_ON = NUM_BACKGROUNDPIXPATH + MAXSTRLENGTHBACKGROUNDPIXPATH + 1,
-  NUM_REVERB_RETURN,
-  NUM_REVERB_PARAM_NBR,
-  NUM_REVERB_LIB,
-  NUM_REVERB_LABEL = NUM_REVERB_LIB + MAXSTRLENGTHFXLIB + 1,
-  NUM_IS_CHORUS_ON = NUM_REVERB_LABEL + MAXSTRLENGTHFXLABEL + 1,
-  NUM_CHORUS_RETURN,
-  NUM_CHORUS_PARAM_NBR,
-  NUM_CHORUS_LIB,
-  NUM_CHORUS_LABEL = NUM_CHORUS_LIB + MAXSTRLENGTHFXLIB + 1,
-  NUM_IS_DELAY_ON = NUM_CHORUS_LABEL + MAXSTRLENGTHFXLABEL + 1,
-  NUM_DELAY_RETURN,
-  NUM_DELAY_BPM,
-  NUM_DELAY_BEATRATIO = NUM_DELAY_BPM + sizeof(float),
-  NUM_DELAY_FEEDBACK = NUM_DELAY_BEATRATIO + sizeof(float),
-  NUM_DELAY_LFO_FREQ = NUM_DELAY_FEEDBACK + sizeof(float),
-  NUM_DELAY_LFO_DEPTH = NUM_DELAY_LFO_FREQ + sizeof(float),
-  NUM_CONFIGLENGTH = NUM_DELAY_LFO_DEPTH + sizeof(float)
-  //NUM_DELAY_WET_DRY_MIX = NUM_DELAY_LFO_DEPTH + sizeof(float),
-  //NUM_CONFIGLENGTH = NUM_DELAY_WET_DRY_MIX + sizeof(float)
+	NUM_MASTERVOL = SAVEINITLENGTH,
+	NUM_CHANNEL_ENABLE,
+	NUM_CHANNEL_VOL = NUM_CHANNEL_ENABLE + NBRCHANNELS + 1,
+	NUM_CHANNEL_PAN = NUM_CHANNEL_VOL + NBRCHANNELS + 1,
+	NUM_CHANNEL_BRIGHTNESS = NUM_CHANNEL_PAN + NBRCHANNELS + 1,
+	NUM_CHANNEL_MODULATION = NUM_CHANNEL_BRIGHTNESS + 2*NBRCHANNELS +1,
+	NUM_CHANNEL_DETUNE = NUM_CHANNEL_MODULATION + NBRCHANNELS + 1,
+	NUM_CHANNEL_ATTACK = NUM_CHANNEL_DETUNE + NBRCHANNELS + 1,
+	NUM_CHANNEL_RELEASE = NUM_CHANNEL_ATTACK + NBRCHANNELS + 1,
+	NUM_CHANNEL_REVERB = NUM_CHANNEL_RELEASE + NBRCHANNELS + 1,
+	NUM_CHANNEL_CHORUS = NUM_CHANNEL_REVERB + NBRCHANNELS + 1,  
+	NUM_CHANNEL_DELAY = NUM_CHANNEL_CHORUS + NBRCHANNELS + 1,
+	NUM_CURRENTPROG = NUM_CHANNEL_DELAY + NBRCHANNELS + 1,
+	NUM_CURRENTLBANK = NUM_CURRENTPROG + NBRCHANNELS + 1,
+	NUM_CURRENTHBANK = NUM_CURRENTLBANK + NBRCHANNELS + 1,
+	NUM_NBRVOICES  = NUM_CURRENTHBANK + NBRCHANNELS + 1,
+	NUM_SAVEONLYUSED  = NUM_NBRVOICES + NBRCHANNELS + 1,
+	NUM_SAVECONFIG,
+	NUM_RED_TEXT,
+	NUM_GREEN_TEXT,
+	NUM_BLUE_TEXT,
+	NUM_RED_BACKGROUND,
+	NUM_GREEN_BACKGROUND,
+	NUM_BLUE_BACKGROUND,
+	NUM_RED_EDITTEXT,
+	NUM_GREEN_EDITTEXT,
+	NUM_BLUE_EDITTEXT,
+	NUM_RED_EDITBACKGROUND,
+	NUM_GREEN_EDITBACKGROUND,
+	NUM_BLUE_EDITBACKGROUND,
+	NUM_QUALITY,
+	NUM_FILTER,
+	NUM_FONTSIZE,
+	NUM_ISINITSET,
+	NUM_INITSETPATH,
+	NUM_ISBACKGROUNDPIX = NUM_INITSETPATH + MAXSTRLENGTHINITSETPATH + 1,
+	NUM_BACKGROUNDPIXPATH,
+	NUM_IS_REVERB_ON = NUM_BACKGROUNDPIXPATH + MAXSTRLENGTHBACKGROUNDPIXPATH + 1,
+	NUM_REVERB_RETURN,
+	NUM_REVERB_PARAM_NBR,
+	NUM_REVERB_LIB,
+	NUM_REVERB_LABEL = NUM_REVERB_LIB + MAXSTRLENGTHFXLIB + 1,
+	NUM_IS_CHORUS_ON = NUM_REVERB_LABEL + MAXSTRLENGTHFXLABEL + 1,
+	NUM_CHORUS_RETURN,
+	NUM_CHORUS_PARAM_NBR,
+	NUM_CHORUS_LIB,
+	NUM_CHORUS_LABEL = NUM_CHORUS_LIB + MAXSTRLENGTHFXLIB + 1,
+	NUM_IS_DELAY_ON = NUM_CHORUS_LABEL + MAXSTRLENGTHFXLABEL + 1,
+	NUM_DELAY_RETURN,
+	NUM_DELAY_BPM,
+	NUM_DELAY_BEATRATIO = NUM_DELAY_BPM + sizeof(float),
+	NUM_DELAY_FEEDBACK = NUM_DELAY_BEATRATIO + sizeof(float),
+	NUM_DELAY_LFO_FREQ = NUM_DELAY_FEEDBACK + sizeof(float),
+	NUM_DELAY_LFO_DEPTH = NUM_DELAY_LFO_FREQ + sizeof(float),
+	NUM_CONFIGLENGTH = NUM_DELAY_LFO_DEPTH + sizeof(float)
+	//NUM_DELAY_WET_DRY_MIX = NUM_DELAY_LFO_DEPTH + sizeof(float),
+	//NUM_CONFIGLENGTH = NUM_DELAY_WET_DRY_MIX + sizeof(float)
 };
-
-class DeicsOnzeGui;
-class DeicsOnzePlugin;
 
 //---------------------------------------------------------
 // outLevel2Amp, Amp for amplitude //between 0.0 and 2.0 or more
@@ -280,13 +275,13 @@ inline double coefAttack(unsigned char attack);
 inline double envRR2coef(int rr, double sr, unsigned char release);
 
 //--------------------------------------------------------
-// DeicsOnzeCtrl
+// DeicsonzeCtrl
 //--------------------------------------------------------
-struct DeicsOnzeCtlr
+struct DeicsonzeCtlr
 {
-  std::string name;
-  int num;
-  int min, max;
+	std::string name;
+	int num;
+	int min, max;
 };
 
 //---------------------------------------------------------
@@ -294,11 +289,11 @@ struct DeicsOnzeCtlr
 //---------------------------------------------------------
 
 enum EnvState{
-  ATTACK,
-  DECAY,
-  SUSTAIN,
-  RELEASE,
-  OFF
+	ATTACK,
+	DECAY,
+	SUSTAIN,
+	RELEASE,
+	OFF
 };
 
 //---------------------------------------------------------
@@ -306,28 +301,28 @@ enum EnvState{
 //---------------------------------------------------------
 
 struct OpVoice {
-  double index;
-  double inct;
-  double targetInct; //used if portamento
-  double amp; //between 0 and 1
-  double ampVeloNote; //keeps the ratio amplitude from velo2AmpR and note2Amp
-                      //in order to change independently the output level
-                      //after pressing the note
-  EnvState envState;
-  double envIndex;
-  double envInct;
-  double envLevel;
-  double coefVLevel;
+	double index;
+	double inct;
+	double targetInct; //used if portamento
+	double amp; //between 0 and 1
+	double ampVeloNote; //keeps the ratio amplitude from velo2AmpR and note2Amp
+	//in order to change independently the output level
+	//after pressing the note
+	EnvState envState;
+	double envIndex;
+	double envInct;
+	double envLevel;
+	double coefVLevel;
 };
 
 //---------------------------------------------------------
 // PitchEnvState
 //---------------------------------------------------------
 enum PitchEnvState{
-  PHASE1,
-  PHASE2,
-  RELEASE_PE,
-  OFF_PE
+	PHASE1,
+	PHASE2,
+	RELEASE_PE,
+	OFF_PE
 };
 
 //---------------------------------------------------------
@@ -335,292 +330,274 @@ enum PitchEnvState{
 //---------------------------------------------------------
 
 struct Voice {
-  bool hasAttractor;//true iff the voice has an attractor (portamento occurring)
-  double attractor; //contains some coefficient for portamento TODO
-  PitchEnvState pitchEnvState;
-  double pitchEnvCoefInct;
-  double pitchEnvCoefInctPhase1;
-  double pitchEnvCoefInctPhase2;
-  double pitchEnvCoefInctPhase3;
-  double pitchEnvCoefInctRelease;
-  double pitchEnvCoefInctInct;
-  bool isOn;
-  bool keyOn;
-  bool isSustained;
-  int pitch; //number of the note
-  double volume;
-  OpVoice op[NBROP];
-  float sampleFeedback;
+	bool hasAttractor;//true iff the voice has an attractor (portamento occurring)
+	double attractor; //contains some coefficient for portamento TODO
+	PitchEnvState pitchEnvState;
+	double pitchEnvCoefInct;
+	double pitchEnvCoefInctPhase1;
+	double pitchEnvCoefInctPhase2;
+	double pitchEnvCoefInctPhase3;
+	double pitchEnvCoefInctRelease;
+	double pitchEnvCoefInctInct;
+	bool isOn;
+	bool keyOn;
+	bool isSustained;
+	int pitch; //number of the note
+	double volume;
+	OpVoice op[NBROP];
+	float sampleFeedback;
 };
 
 //---------------------------------------------------------
 // Channel
 //---------------------------------------------------------
 struct Channel {
-  bool isEnable;
-  float ampLeft;
-  float ampRight;
-  int volume; //0 to 255
-  int pan; //TODO -63 +64 or -127 +128 
-  int modulation;//0 to 127
-  int detune;//-31 to 31
-  int brightness; //0 to 4095
-  int attack; //0 to 127
-  int release; //0 to 127    
-  float feedbackAmp;
-  float lfoFreq;
-  float lfoPitch;
-  float lfoMaxCoefInct;
-  float lfoCoefInct;
-  float lfoCoefInctInct;
-  unsigned int lfoIndex;
-  unsigned int lfoMaxIndex;
-  float lfoMaxAmp;
-  float lfoMaxDAmp;
-  float lfoAmp;
-  float lfoCoefAmp;
-  double lfoDelayIndex;
-  double lfoDelayInct;
-  double lfoDelayMaxIndex;
-  bool delayPassed;
-  bool sustain;
-  double pitchBendCoef;//speed coef to read the sample
-  unsigned char nbrVoices;
-  Voice voices[MAXNBRVOICES];
-  double lastInc[NBROP];
-  std::list<int> lastVoiceKeyOn; //stack of the voice number
-  int lastVoiceKeyOff;
-  bool isLastNote;
-  //FX
-  float chorusAmount; //between 0.0 and 1.0
-  float reverbAmount; //between 0.0 and 1.0
-  float delayAmount; //between 0.0 and 1.0
+	bool isEnable;
+	float ampLeft;
+	float ampRight;
+	int volume; //0 to 255
+	int pan; //TODO -63 +64 or -127 +128 
+	int modulation;//0 to 127
+	int detune;//-31 to 31
+	int brightness; //0 to 4095
+	int attack; //0 to 127
+	int release; //0 to 127    
+	float feedbackAmp;
+	float lfoFreq;
+	float lfoPitch;
+	float lfoMaxCoefInct;
+	float lfoCoefInct;
+	float lfoCoefInctInct;
+	unsigned int lfoIndex;
+	unsigned int lfoMaxIndex;
+	float lfoMaxAmp;
+	float lfoMaxDAmp;
+	float lfoAmp;
+	float lfoCoefAmp;
+	double lfoDelayIndex;
+	double lfoDelayInct;
+	double lfoDelayMaxIndex;
+	bool delayPassed;
+	bool sustain;
+	double pitchBendCoef;//speed coef to read the sample
+	unsigned char nbrVoices;
+	Voice voices[MAXNBRVOICES];
+	double lastInc[NBROP];
+	std::list<int> lastVoiceKeyOn; //stack of the voice number
+	int lastVoiceKeyOff;
+	bool isLastNote;
+	//FX
+	float chorusAmount; //between 0.0 and 1.0
+	float reverbAmount; //between 0.0 and 1.0
+	float delayAmount; //between 0.0 and 1.0
 };
 
 //---------------------------------------------------------
 // Global
 //---------------------------------------------------------
 enum Quality {
-  high,
-  middle,
-  low,
-  ultralow
+	high,
+	middle,
+	low,
+	ultralow
 };
 
 struct Global {
-  float masterVolume;
-  Quality quality; //high, middle, low
-  int qualityCounter; //counter to skip some sample depending on quality
-  int qualityCounterTop; //number of sample - 1 to skip
-  double deiSampleRate; //depending on quality deicsOnze sample rate varies
-  bool filter; //low passe filter used when the sampling is low
-  int fontSize;
-  float lastLeftSample;
-  float lastRightSample;
-  float lastInputLeftChorusSample;
-  float lastInputRightChorusSample;
-  float lastInputLeftReverbSample;
-  float lastInputRightReverbSample;
-  float lastInputLeftDelaySample;
-  float lastInputRightDelaySample;
-  Channel channel[NBRCHANNELS];
-  bool isChorusActivated;
-  float chorusReturn;
-  bool isReverbActivated;
-  float reverbReturn;
-  bool isDelayActivated;
-  float delayReturn;
+	float masterVolume;
+	Quality quality; //high, middle, low
+	int qualityCounter; //counter to skip some sample depending on quality
+	int qualityCounterTop; //number of sample - 1 to skip
+	double deiSampleRate; //depending on quality deicsonze sample rate varies
+	bool filter; //low passe filter used when the sampling is low
+	int fontSize;
+	float lastLeftSample;
+	float lastRightSample;
+	float lastInputLeftChorusSample;
+	float lastInputRightChorusSample;
+	float lastInputLeftReverbSample;
+	float lastInputRightReverbSample;
+	float lastInputLeftDelaySample;
+	float lastInputRightDelaySample;
+	Channel channel[NBRCHANNELS];
+	bool isChorusActivated;
+	float chorusReturn;
+	bool isReverbActivated;
+	float reverbReturn;
+	bool isDelayActivated;
+	float delayReturn;
 };
 
 //---------------------------------------------------------
-//   DeicsOnze : DX11 emulator
+//   Deicsonze : DX11 emulator
 //---------------------------------------------------------
 
-class DeicsOnze : public Mess {
-  DeicsOnzeGui* _gui;
-      
-  unsigned char* initBuffer;
-  int initLen;
+class Deicsonze {
 
-  static int useCount;
-  static float waveTable[NBRWAVES][RESOLUTION];
+	unsigned char* initBuffer;
+	int initLen;
 
- private:
-  void parseInitData(int length, const unsigned char* data);
-  void loadConfiguration(QString fileName);
-  void setupInitBuffer(int len);
+	static int useCount;
+	static float waveTable[NBRWAVES][RESOLUTION];
 
- public:
-  float** tempInputChorus;
-  float** tempOutputChorus;
-  float** tempInputReverb;
-  float** tempOutputReverb;
-  float** tempInputDelay;
-  float** tempOutputDelay;
+private:
+	void parseInitData(int length, const unsigned char* data);
+	void setupInitBuffer(int len);
 
-  float* getSinusWaveTable();
+public:
+	float** tempInputChorus;
+	float** tempOutputChorus;
+	float** tempInputReverb;
+	float** tempOutputReverb;
+	float** tempInputDelay;
+	float** tempOutputDelay;
 
-  int nbrCtrl;
+	float* getSinusWaveTable();
 
-  QString _initSetPath;
-  bool _isInitSet;
-  QString _backgroundPixPath;
-  bool _isBackgroundPix;
-  bool _saveOnlyUsed;
-  bool _saveConfig;
-  DeicsOnzeCtlr _ctrl[NBRCTRLS];
-  Global _global;
-  Preset* _preset[NBRCHANNELS];
-  Preset* _initialPreset;
+	int nbrCtrl;
 
-  //FX
-  MusESimplePlugin::PluginI* _pluginIReverb;
-  MusESimplePlugin::PluginI* _pluginIChorus;
-  MusESimplePlugin::PluginI* _pluginIDelay;
+	std::string _initSetPath;
+	bool _isInitSet;
+	std::string _backgroundPixPath;
+	bool _isBackgroundPix;
+	bool _saveOnlyUsed;
+	bool _saveConfig;
+	DeicsonzeCtlr _ctrl[NBRCTRLS];
+	Global _global;
+	Preset* _preset[NBRCHANNELS];
+	Preset* _initialPreset;
 
-  void initPluginReverb(MusESimplePlugin::Plugin*);
-  void initPluginChorus(MusESimplePlugin::Plugin*);
-  void initPluginDelay(MusESimplePlugin::Plugin*);
+	// TODO
+	// //FX
+	// MusESimplePlugin::PluginI* _pluginIReverb;
+	// MusESimplePlugin::PluginI* _pluginIChorus;
+	// MusESimplePlugin::PluginI* _pluginIDelay;
+
+	// void initPluginReverb(MusESimplePlugin::Plugin*);
+	// void initPluginChorus(MusESimplePlugin::Plugin*);
+	// void initPluginDelay(MusESimplePlugin::Plugin*);
   
-  void setReverbParam(int i, float val);
-  float getReverbParam(int i) const;
-  void setChorusParam(int i, float val);
-  float getChorusParam(int i) const;
-  void setDelayParam(int i, float val);
-  float getDelayParam(int i) const;
-  void setDelayBPM(float val);
-  void setDelayBeatRatio(float val);
-  void setDelayFeedback(float val);
-  void setDelayLFOFreq(float val);
-  void setDelayLFODepth(float val);
-  void setDelayDryWet(float val);
-  float getDelayDryWet() const; 
-  float getDelayBPM() const;
-  float getDelayBeatRatio() const;
-  float getDelayFeedback() const;
-  float getDelayLFOFreq() const;
-  float getDelayLFODepth() const;
+	void setReverbParam(int i, float val);
+	float getReverbParam(int i) const;
+	void setChorusParam(int i, float val);
+	float getChorusParam(int i) const;
+	void setDelayParam(int i, float val);
+	float getDelayParam(int i) const;
+	void setDelayBPM(float val);
+	void setDelayBeatRatio(float val);
+	void setDelayFeedback(float val);
+	void setDelayLFOFreq(float val);
+	void setDelayLFODepth(float val);
+	void setDelayDryWet(float val);
+	float getDelayDryWet() const; 
+	float getDelayBPM() const;
+	float getDelayBeatRatio() const;
+	float getDelayFeedback() const;
+	float getDelayLFOFreq() const;
+	float getDelayLFODepth() const;
 
-  //Filter
-  LowFilter* _dryFilter;
-  LowFilter* _chorusFilter;
-  LowFilter* _reverbFilter;
-  LowFilter* _delayFilter;
+	//Filter
+	LowFilter* _dryFilter;
+	LowFilter* _chorusFilter;
+	LowFilter* _reverbFilter;
+	LowFilter* _delayFilter;
 
-  mutable MidiPatch _patch;
-  mutable int _numPatchProg; //used by getPatchInfo
-
-  //preset tree 
-  Set* _set;
+	//preset tree 
+	Set* _set;
   
-  void setSampleRate(int sr);
-  Preset* findPreset(int hbank, int lbank, int prog) const;
-  Subcategory* findSubcategory(int hbank, int lbank) const;
-  Category* findCategory(int hbank) const;
-  void initCtrls();
-  void initGlobal();
-  void initChannels();
-  void initChannel(int c);
-  void resetVoices(); //when panic is pressed
-  void initVoice(int c, int v);
-  void initVoices(int c);
-  void setPreset(int c);
-  void setFeedback(int c);
-  void setLfo(int c);
-  void setOutLevel(int c, int k); //set the output level of the op k
-  void setOutLevel(int c); //do the same for all operators
-  void setEnvAttack(int c, int v, int k); //set envInct of voice v and op k
-  void setEnvAttack(int c, int k); //do the same for all voices of operator k
-  void setEnvAttack(int c); //do the same for all voices all operators
-  void setEnvRelease(int c, int v, int k); //set coefVLevel of voice v and op k
-  void setEnvRelease(int c, int k); //do the same for all voices of operator k
-  void setEnvRelease(int c); //do the same for all voices all operators  
-  void setPitchEnvRelease(int c, int v);
-  void setQuality(Quality q);
-  void setFilter(bool f);
-  double brightness2Amp(int c, int k); //get the brightness of the operator k
-  void loadSutulaPresets();
-  void loadSet(QString s);
-  int noteOff2Voice(int c); //return the first free voice
-  int minVolu2Voice(int c);
-  int pitchOn2Voice(int c, int pitch);
-  void programSelect(int c, int hbank, int lbank, int prog);
-  bool existsKeyOn(int ch);
-  void setNbrVoices(int c, int nv);
-  void setMasterVol(int v);
-  void setChannelEnable(int c, bool e);
-  void setChannelVol(int c, int v);
-  void setChannelPan(int c, int v);
-  void applyChannelAmp(int c);
-  void setChannelDetune(int c, int d);
-  void setChannelBrightness(int c, int b);
-  void setChannelModulation(int c, int m);
-  void setChannelAttack(int c, int a);
-  void setChannelRelease(int c, int r);
-  void setChannelReverb(int c, int r);
-  void setChannelChorus(int c, int val);
-  void setChannelDelay(int c, int val);
-  void setChorusReturn(int val);
-  void setReverbReturn(int val);
-  void setDelayReturn(int val);
-  bool getChannelEnable(int c) const;
-  int getNbrVoices(int c) const;
-  int getMasterVol(void) const;
-  bool getFilter(void) const;
-  int getChannelVol(int c) const;
-  int getChannelPan(int c) const;
-  int getChannelDetune(int c) const;
-  int getChannelBrightness(int c) const;
-  int getChannelModulation(int c) const;
-  int getChannelAttack(int c) const;
-  int getChannelRelease(int c) const;
-  int getChannelReverb(int c) const;
-  int getChannelChorus(int c) const;
-  int getChannelDelay(int c) const;
-  int getChorusReturn(void) const;
-  int getReverbReturn(void) const;
-  int getDelayReturn(void) const;
-  void setPitchBendCoef(int c, int val);
-  void setModulation(int c, int val); //TODO check between setChannelModulation
-  void setSustain(int c, int val);
+	void setSampleRate(int sr);
+	Preset* findPreset(int hbank, int lbank, int prog) const;
+	Subcategory* findSubcategory(int hbank, int lbank) const;
+	Category* findCategory(int hbank) const;
+	void initCtrls();
+	void initGlobal();
+	void initChannels();
+	void initChannel(int c);
+	void resetVoices(); //when panic is pressed
+	void initVoice(int c, int v);
+	void initVoices(int c);
+	void setPreset(int c);
+	void setFeedback(int c);
+	void setLfo(int c);
+	void setOutLevel(int c, int k); //set the output level of the op k
+	void setOutLevel(int c); //do the same for all operators
+	void setEnvAttack(int c, int v, int k); //set envInct of voice v and op k
+	void setEnvAttack(int c, int k); //do the same for all voices of operator k
+	void setEnvAttack(int c); //do the same for all voices all operators
+	void setEnvRelease(int c, int v, int k); //set coefVLevel of voice v and op k
+	void setEnvRelease(int c, int k); //do the same for all voices of operator k
+	void setEnvRelease(int c); //do the same for all voices all operators  
+	void setPitchEnvRelease(int c, int v);
+	void setQuality(Quality q);
+	void setFilter(bool f);
+	double brightness2Amp(int c, int k); //get the brightness of the operator k
+	void loadSutulaPresets();
+	int noteOff2Voice(int c); //return the first free voice
+	int minVolu2Voice(int c);
+	int pitchOn2Voice(int c, int pitch);
+	void programSelect(int c, int hbank, int lbank, int prog);
+	bool existsKeyOn(int ch);
+	void setNbrVoices(int c, int nv);
+	void setMasterVol(int v);
+	void setChannelEnable(int c, bool e);
+	void setChannelVol(int c, int v);
+	void setChannelPan(int c, int v);
+	void applyChannelAmp(int c);
+	void setChannelDetune(int c, int d);
+	void setChannelBrightness(int c, int b);
+	void setChannelModulation(int c, int m);
+	void setChannelAttack(int c, int a);
+	void setChannelRelease(int c, int r);
+	void setChannelReverb(int c, int r);
+	void setChannelChorus(int c, int val);
+	void setChannelDelay(int c, int val);
+	void setChorusReturn(int val);
+	void setReverbReturn(int val);
+	void setDelayReturn(int val);
+	bool getChannelEnable(int c) const;
+	int getNbrVoices(int c) const;
+	int getMasterVol(void) const;
+	bool getFilter(void) const;
+	int getChannelVol(int c) const;
+	int getChannelPan(int c) const;
+	int getChannelDetune(int c) const;
+	int getChannelBrightness(int c) const;
+	int getChannelModulation(int c) const;
+	int getChannelAttack(int c) const;
+	int getChannelRelease(int c) const;
+	int getChannelReverb(int c) const;
+	int getChannelChorus(int c) const;
+	int getChannelDelay(int c) const;
+	int getChorusReturn(void) const;
+	int getReverbReturn(void) const;
+	int getDelayReturn(void) const;
+	void setPitchBendCoef(int c, int val);
+	void setModulation(int c, int val); //TODO check between setChannelModulation
+	void setSustain(int c, int val);
 
-  void readConfiguration(QDomNode qdn);
-  void writeConfiguration(AL::Xml* xml);
-
-  bool setController(int ch, int ctrl, int val, bool fromGui);
-  virtual bool setController(int ch, int ctrl, int val);
-  bool sysex(int length, const unsigned char* data, bool fromGui); 
-  virtual bool sysex(int l, const unsigned char* d);
+	bool setController(int ch, int ctrl, int val, bool fromGui);
+	virtual bool setController(int ch, int ctrl, int val);
+	bool sysex(int length, const unsigned char* data, bool fromGui); 
+	virtual bool sysex(int l, const unsigned char* d);
   
-  virtual const char* getPatchName(int ch, int number, bool) const; 
-  virtual const MidiPatch* getPatchInfo(int, const MidiPatch *) const;
+	virtual const char* getPatchName(int ch, int number, bool) const;
 
-  virtual int getControllerInfo(int arg1, const char** arg2, 
-				int* arg3, int* arg4, int* arg5, int* arg6) const;
-  virtual void getInitData(int* length, const unsigned char** data);
-  // This is only a kludge required to support old songs' midistates. Do not use in any new synth.
-  virtual int oldMidiStateHeader(const unsigned char** data) const;
+	virtual int getControllerInfo(int arg1, const char** arg2, 
+	                              int* arg3, int* arg4, int* arg5, int* arg6) const;
+	virtual void getInitData(int* length, const unsigned char** data);
 
-  virtual bool playNote(int channel, int pitch, int velo);
-  virtual void processMessages();
-  virtual void process(unsigned pos, float** buffer, int offset, int n);
+	virtual bool playNote(int channel, int pitch, int velo);
+	virtual void processMessages();
+	virtual void process(unsigned pos, float** buffer, int offset, int n);
   
-  // GUI interface routines
-  virtual bool hasNativeGui() const { return true; }
-  virtual bool nativeGuiVisible() const;
-  virtual void showNativeGui(bool);
-  virtual void getNativeGeometry(int* x, int* y, int* w, int* h) const;
-  virtual void setNativeGeometry(int, int, int, int);
+	// GUI interface routines
+	virtual bool hasNativeGui() const { return true; }
+	virtual bool nativeGuiVisible() const;
+	virtual void showNativeGui(bool);
+	virtual void getNativeGeometry(int* x, int* y, int* w, int* h) const;
+	virtual void setNativeGeometry(int, int, int, int);
   
-  DeicsOnze();
-  virtual ~DeicsOnze();
+	Deicsonze();
+	virtual ~Deicsonze();
 };
-
-extern QString DEI_hostConfigPath;
-extern QString DEI_sharePath;
-extern unsigned int DEI_segmentSize;
-extern int DEI_sampleRate;
-extern bool DEI_useDenormalBias;
-extern float DEI_denormalBias;
 
 #endif /* __DEICSONZE_H */

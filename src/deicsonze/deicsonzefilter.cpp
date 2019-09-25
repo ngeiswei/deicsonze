@@ -30,38 +30,37 @@
 #include "deicsonzefilter.h"
 
 LowFilter::LowFilter() {
-  _li = 0.0;
-  _ri = 0.0;
-  _lo = 0.0;
-  _ro = 0.0;
+	_li = 0.0;
+	_ri = 0.0;
+	_lo = 0.0;
+	_ro = 0.0;
 }
 
 void LowFilter::setSamplerate(int sr) {
-  _samplerate = sr;
+	_samplerate = sr;
 }
 
 void LowFilter::setCutoff(double cut) {
-  _cutoff = cut;
-  float w = 2.0 * (float)_samplerate;
-  float fCut = _cutoff * 2.0 * M_PI;
-  float norm = 1.0 / (fCut + w);
-  _a = fCut * norm;
-  _b = (w - fCut) * norm;
+	_cutoff = cut;
+	float w = 2.0 * (float)_samplerate;
+	float fCut = _cutoff * 2.0 * M_PI;
+	float norm = 1.0 / (fCut + w);
+	_a = fCut * norm;
+	_b = (w - fCut) * norm;
 }
 
 void LowFilter::process(float* leftSamples, float* rightSamples, unsigned n) {
-  float cl, cr;
-  for(unsigned i = 0; i < n; i++) {
-    cl = leftSamples[i];
-    cr = rightSamples[i];
+	float cl, cr;
+	for(unsigned i = 0; i < n; i++) {
+		cl = leftSamples[i];
+		cr = rightSamples[i];
 
-    leftSamples[i] = _a * (cl + _li) + _b * _lo;
-    rightSamples[i] = _a * (cr + _ri) + _b * _ro;
+		leftSamples[i] = _a * (cl + _li) + _b * _lo;
+		rightSamples[i] = _a * (cr + _ri) + _b * _ro;
 
-    _li = cl;
-    _ri = cr;
-    _lo = leftSamples[i];
-    _ro = rightSamples[i];
-  }
+		_li = cl;
+		_ri = cr;
+		_lo = leftSamples[i];
+		_ro = rightSamples[i];
+	}
 }
-

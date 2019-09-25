@@ -31,10 +31,7 @@
 #define __DEICSONZEPLUGIN_H
 
 #include "deicsonze.h"
-#include "deicsonzegui.h"
-//#include "plugins/pandelay/pandelaymodel.h"
 
-class DeicsOnze;
-class DeicsOnzeGui;
+class Deicsonze;
 
 #endif

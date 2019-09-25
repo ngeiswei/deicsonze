@@ -30,30 +30,28 @@
 #ifndef __DEICSONZEFILTER_H
 #define __DEICSONZEFILTER_H
 
-#include "muse_math.h"
-
 class LowFilter {
- private:
-  int _samplerate;
+private:
+	int _samplerate;
 
-  double _cutoff; //frequency cutoff
-  float _a;
-  float _b;
+	double _cutoff; //frequency cutoff
+	float _a;
+	float _b;
 
-  float _li; //last left input sample
-  float _ri; //last right input sample
-  float _lo; //last left output sample
-  float _ro; //last right output sample
- public:
-  LowFilter();
-  ~LowFilter() {}
+	float _li; //last left input sample
+	float _ri; //last right input sample
+	float _lo; //last left output sample
+	float _ro; //last right output sample
+public:
+	LowFilter();
+	~LowFilter() {}
 
-  void setSamplerate(int sr);
-  void setCutoff(double cut);
-  //int getSamplerate();
-  //double getCutoff();
+	void setSamplerate(int sr);
+	void setCutoff(double cut);
+	//int getSamplerate();
+	//double getCutoff();
 
-  void process(float* leftSamples, float* RightSamples, unsigned n);
+	void process(float* leftSamples, float* RightSamples, unsigned n);
 };
 
 #endif /* __DEICSONZEFILTER_H */
